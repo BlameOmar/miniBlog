@@ -1,4 +1,4 @@
-// swift-tools-version: 5.6
+// swift-tools-version: 5.7
 
 import PackageDescription
 
@@ -9,7 +9,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-collections.git", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-format", branch: "release/5.6"),
+        .package(url: "https://github.com/apple/swift-format", branch: "release/5.7"),
+        .package(url: "https://github.com/BlameOmar/argon2", branch: "main"),
         .package(url: "https://github.com/gumob/PunycodeSwift.git", from: "2.1.0"),
     ],
     targets: [
@@ -23,6 +24,12 @@ let package = Package(
         .testTarget(
             name: "miniBlogTests",
             dependencies: ["miniBlog"]),
+        .target(
+            name: "Argon2Swift",
+            dependencies: [
+                "SwiftExtras",
+                .product(name: "argon2", package: "argon2")
+            ]),
         .target(
             name: "FoundationExtras",
             dependencies: []),
@@ -38,6 +45,9 @@ let package = Package(
                 "SafeHTML",
                 .product(name: "Collections", package: "swift-collections"),
             ]),
+        .target(
+            name: "SwiftExtras",
+            dependencies: []),
         .plugin(
             name: "SwiftFormatterPlugin",
             capability: .command(
