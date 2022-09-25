@@ -10,7 +10,7 @@ extension StringProtocol {
     /// Some syntactically valid email addresses are rejected as invalid due to policy:
     ///   * Email addresses containing quotes (eg. "user"@example.com).
     ///   * Email addresses using an IP address instead of a domain name (eg. user@[192.0.2.10]).
-    public var isValidEmailAddress: Bool {
+    var isValidEmailAddress: Bool {
         validate(emailAddress: self)
     }
 }
