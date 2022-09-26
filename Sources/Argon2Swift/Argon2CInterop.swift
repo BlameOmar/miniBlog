@@ -130,7 +130,7 @@ func argon2<E: CArgon2Encoder>(
                     guard status == .ok else {
                         throw status
                     }
-                    return outputLength
+                    return outputLength - 1  // Exclude the terminating null byte
                 }
             }
         }
