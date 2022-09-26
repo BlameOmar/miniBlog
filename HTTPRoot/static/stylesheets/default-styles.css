@@ -1,0 +1,147 @@
+/* © 2020 Omar Stefan Evans. All rights reserved. */
+
+@font-face{
+    font-family: 'Source Sans Variable';
+    font-weight: 200 900;
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    src: url('/static/fonts/SourceSansVariable-Roman.ttf.woff2') format('woff2');
+}
+
+@font-face{
+    font-family: 'Source Sans Variable';
+    font-weight: 200 900;
+    font-style: italic;
+    font-stretch: normal;
+    font-display: swap;
+    src: url('/static/fonts/SourceSansVariable-Italic.ttf.woff2') format('woff2');
+}
+
+/*@font-face {*/
+/*    font-family: 'Source Han Sans JP';*/
+/*    font-weight: 160;*/
+/*    font-display: swap;*/
+/*    src: url('/static/fonts/SourceHanSansJP-Light.subset.woff2') format('woff2');*/
+/*}*/
+
+/*@font-face {*/
+/*    font-family: 'Source Han Sans JP';*/
+/*    font-weight: 420;*/
+/*    font-display: swap;*/
+/*    src: url('/static/fonts/SourceHanSansJP-Regular.subset.woff2') format('woff2');*/
+/*}*/
+
+/*@font-face {*/
+/*    font-family: 'Source Han Sans JP';*/
+/*    font-weight: 780;*/
+/*    font-display: swap;*/
+/*    src: url('/static/fonts/SourceHanSansJP-Bold.subset.woff2') format('woff2');*/
+/*}*/
+
+body {
+    margin: 0 16px;
+    background-color: hsla(0, 0%, 13%, 1.0);
+    color: hsla(0, 0%, 90%, 1.0);
+    font-family: "Source Sans Variable", sans-serif;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+p, h1, h2, h3, h4, h5, h6 { margin: 1.5em 0;  /* matches line-height*/ }
+
+/*:lang(ja), .contains-kana { font-family: "Source Han Sans JP", sans-serif; }*/
+/*:lang(ja-Latn) { font-family: inherit; }*/
+
+a:link { color: #7ABBFF; }
+a:visited { color: #B9A8FF; }
+
+nav ul { list-style-type: none; padding: 0; }
+footer a { color: inherit !important; text-decoration: none }
+
+.nobreak { word-break: keep-all; }
+.green-text { color: #7D9D00; }
+.yellow-text { color: #A1902E; }
+.orange-text { color: #C17E62; }
+.medium { font-weight: 500; }
+.thin { font-weight: 300; }
+.bold { font-weight: 700; }
+
+.vstack { display: flex; flex-direction: column; }
+.expands { flex-grow: 1; }
+
+
+.page-content { min-height: 100vh; }
+.page-header h1 { margin: 1.5rem 0; font-size: 1.5em; text-align: center;  }
+.page-footer { margin-top: 1.5em; }
+.photo img { display: block; }
+
+
+@media(min-width: 700px) {
+    .wide-media-hstack { display: flex; flex-direction: row; align-items: start; }
+
+    .photo-caption { margin-left: 1em; }
+    .photo-caption p:first-child { margin-top: 0 }
+}
+
+@media(min-width: 1050px) {
+    .page-content { max-width: 1200px; margin: 0 auto; }
+    .page-header h1 { margin: 0.5em 0; }
+}
+
+.social-media-buttons { display: flex; align-items: center; justify-content: center; }
+.social-media-buttons img { margin-left: 8px; margin-right: 8px; }
+.social-media-buttons a:hover { filter: brightness(80%); }
+
+.journal-entry {
+  --body-text-size: 16px;
+  --title-text-size: calc(3 * var(--body-text-size));
+  --block-element-spacing: calc(1.5 * var(--body-text-size));
+  --timestamp-font-weight: 200;
+  
+  max-width: 800px;
+  font-size: var(--body-text-size);
+  font-weight: 350;
+}
+
+.journal-entry > header [property="headline"] {
+  font-size: 3em;
+  font-weight: 900;
+  margin: 24px 0;
+}
+
+.journal-entry > header p {
+  margin: 0;
+}
+
+.journal-entry > header time {
+  font-weight: var(--timestamp-font-weight);
+}
+
+.journal-entry > footer [property="author"] {
+  font-weight: 500;
+}
+
+.journal-entry > footer [property="author"]:before {
+  font-weight: 200;
+  content: "—"
+}
+
+.journal-entry [property="articleBody"] h1,
+.journal-entry [property="articleBody"] h2,
+.journal-entry [property="articleBody"] h3,
+.journal-entry [property="articleBody"] h4,
+.journal-entry [property="articleBody"] h5,
+.journal-entry [property="articleBody"] h6,
+.journal-entry [property="articleBody"] p {
+  margin: var(--block-element-spacing) 0;
+}
+
+.journal-entry [property="articleBody"] h1 {
+  font-size: 2em;
+}
+
+.journal-entry [property="articleBody"] .narrator {
+  color: hsla(150, 60%, 45%, 1.0);
+  font-style: italic;
+}
