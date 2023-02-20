@@ -1,50 +1,91 @@
-/* © 2020 Omar Stefan Evans. All rights reserved. */
+/* © 2020-2022 Omar Stefan Evans. */
 
-@font-face{
-    font-family: 'Source Sans Variable';
-    font-weight: 200 900;
+
+/* MARK: Fonts */
+
+/* Montserrat */
+@font-face {
+    font-family: 'Montserrat';
+    font-weight: 100 900;
     font-style: normal;
     font-stretch: normal;
     font-display: swap;
-    src: url('/static/fonts/SourceSansVariable-Roman.ttf.woff2') format('woff2');
+    src: url('/static/fonts/Montserrat.woff2') format('woff2');
 }
 
-@font-face{
-    font-family: 'Source Sans Variable';
-    font-weight: 200 900;
+@font-face {
+    font-family: 'Montserrat';
+    font-weight: 100 900;
     font-style: italic;
     font-stretch: normal;
     font-display: swap;
-    src: url('/static/fonts/SourceSansVariable-Italic.ttf.woff2') format('woff2');
+    src: url('/static/fonts/Montserrat-Italic.woff2') format('woff2');
 }
 
-/*@font-face {*/
-/*    font-family: 'Source Han Sans JP';*/
-/*    font-weight: 160;*/
-/*    font-display: swap;*/
-/*    src: url('/static/fonts/SourceHanSansJP-Light.subset.woff2') format('woff2');*/
-/*}*/
+/* Replaces some charcters with versions from from Stylistic Set 1 (ss01).
+   
+   Replacements (normal):
+     - 'a' (U+61): The single storey lowercase 'a' in ss01 harmonizes well with lowercase letters
+                   'b', 'd', 'g', 'o', 'p', and, 'q'.
+     - 'y' (U+79): The lowercase 'y' in the default set is angular and has a unique descender,
+                   wheras in ss01 it is rounded and has the same style descender as 'g'.
+   Replacements (italic):
+     - 'y' (U+79): As above.
+ */
+@font-face {
+    font-family: 'Montserrat';
+    font-weight: 100 900;
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    src: url('/static/fonts/Montserrat.woff2') format('woff2');
+    font-feature-settings: "ss01" on;
+    unicode-range: U+61, U+79;
+}
 
-/*@font-face {*/
-/*    font-family: 'Source Han Sans JP';*/
-/*    font-weight: 420;*/
-/*    font-display: swap;*/
-/*    src: url('/static/fonts/SourceHanSansJP-Regular.subset.woff2') format('woff2');*/
-/*}*/
+@font-face {
+    font-family: 'Montserrat';
+    font-weight: 100 900;
+    font-style: italic;
+    font-stretch: normal;
+    font-display: swap;
+    src: url('/static/fonts/Montserrat-Italic.woff2') format('woff2');
+    font-feature-settings: "ss01" on;
+    font-variant: styleset("ss01")
+    unicode-range: U+79;
+}
 
-/*@font-face {*/
-/*    font-family: 'Source Han Sans JP';*/
-/*    font-weight: 780;*/
-/*    font-display: swap;*/
-/*    src: url('/static/fonts/SourceHanSansJP-Bold.subset.woff2') format('woff2');*/
-/*}*/
+/* Exo 2 */
+@font-face {
+    font-family: 'Exo 2';
+    font-weight: 100 900;
+    font-style: normal;
+    font-stretch: normal;
+    font-display: swap;
+    src: url('/static/fonts/Exo2.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Exo 2';
+    font-weight: 100 900;
+    font-style: italic;
+    font-stretch: normal;
+    font-display: swap;
+    src: url('/static/fonts/Exo2-Italic.woff2') format('woff2');
+}
+
+
+/* MARK: Main styles */
+
+:root {
+    font-size: 20px;
+}
 
 body {
-    margin: 0 16px;
-    background-color: hsla(0, 0%, 13%, 1.0);
-    color: hsla(0, 0%, 90%, 1.0);
-    font-family: "Source Sans Variable", sans-serif;
-    font-size: 20px;
+    margin: 0 2rem;
+    background-color: hsla(172, 26%, 23%, 1.0);
+    color: hsla(0, 0%, 80%, 0.7);
+    font-family: "Exo 2", sans-serif;
     line-height: 1.5;
 }
 
@@ -60,11 +101,8 @@ nav ul { list-style-type: none; padding: 0; }
 footer a { color: inherit !important; text-decoration: none }
 
 .nobreak { word-break: keep-all; }
-.green-text { color: #7D9D00; }
-.yellow-text { color: #A1902E; }
-.orange-text { color: #C17E62; }
 .medium { font-weight: 500; }
-.thin { font-weight: 300; }
+.light { font-weight: 300; }
 .bold { font-weight: 700; }
 
 .vstack { display: flex; flex-direction: column; }
@@ -72,7 +110,16 @@ footer a { color: inherit !important; text-decoration: none }
 
 
 .page-content { min-height: 100vh; }
-.page-header h1 { margin: 1.5rem 0; font-size: 1.5em; text-align: center;  }
+.page-header h1 {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    font-family: Montserrat;
+    font-size: 4em;
+    font-weight: 100;
+    line-height 1.5;
+    text-decoration: underline;
+    text-decoration-skip-ink: none;
+}
 .page-footer { margin-top: 1.5em; }
 .photo img { display: block; }
 

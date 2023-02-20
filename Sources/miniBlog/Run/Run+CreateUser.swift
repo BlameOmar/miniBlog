@@ -11,15 +11,14 @@ extension Run {
             let environment = commonOptions.environment
 
             LoggingSystem.bootstrap(from: commonOptions)
-            let config = Blog.Configuration()
-
+            let configuration = try ConfigurationReader.getConfiguration()
             let terminal = Terminal()
             let name = terminal.prompt("Name")
             let email = terminal.prompt("Email")
             let username = terminal.prompt("Username")
             let password = Secret(terminal.securePrompt("Password"))
 
-            let blog = try await Blog.prepare(configuration: config, environment: environment)
+            let blog = try await Blog.prepare(configuration: configuration.application, environment: environment)
             try await blog.createUser(name: name, email: email, username: username, password: password)
         }
     }

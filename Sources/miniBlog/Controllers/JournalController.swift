@@ -40,7 +40,7 @@ struct JournalController: RouteCollection {
     }
 
     func listEntries(request: Request, status: HTTPStatus = .ok) async throws -> Response {
-        try await ListJournalEntriesView(authenticatedUser: request.auth.get()).encodeResponse(
+        try await ListJournalEntriesView(authenticatedUser: request.auth.get(), blogConfiguration: request.application.blogConfiguration).encodeResponse(
             status: status, for: request)
     }
 
@@ -147,6 +147,6 @@ struct JournalController: RouteCollection {
         }
 
         try await entry.$author.load(on: request.db)
-        return try await JournalEntryView(journalEntry: entry).encodeResponse(for: request)
+        return try await JournalEntryView(journalEntry: entry, blogConfiguration: request.application.blogConfiguration).encodeResponse(for: request)
     }
 }

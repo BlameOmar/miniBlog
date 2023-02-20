@@ -6,7 +6,7 @@
       "location" : "https://github.com/BlameOmar/argon2",
       "state" : {
         "branch" : "main",
-        "revision" : "5893824999069a8a3da2f8ba19b9e9a200dc6d19"
+        "revision" : "8dc2defe28741b11bdd27402c4e136a034c28cf8"
       }
     },
     {
@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swift-server/async-http-client.git",
       "state" : {
-        "revision" : "fc510a39cff61b849bf5cdff17eb2bd6d0777b49",
-        "version" : "1.11.5"
+        "revision" : "7f05a8da46cc2a4ab43218722298b81ac7a08031",
+        "version" : "1.13.2"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/async-kit.git",
       "state" : {
-        "revision" : "c3329e444bafbb12d1d312af9191be95348a8175",
-        "version" : "1.13.0"
+        "revision" : "9acea4c92f51a5885c149904f0d11db4712dda80",
+        "version" : "1.16.0"
       }
     },
     {
@@ -32,8 +32,17 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/console-kit.git",
       "state" : {
-        "revision" : "a7e67a1719933318b5ab7eaaed355cde020465b1",
-        "version" : "4.5.0"
+        "revision" : "447f1046fb4e9df40973fe426ecb24a6f0e8d3b4",
+        "version" : "4.6.0"
+      }
+    },
+    {
+      "identity" : "defaultcodable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BlameOmar/DefaultCodable",
+      "state" : {
+        "branch" : "wip/2.0",
+        "revision" : "ae94c6721c76657ada39b0738080b21db3f7cd78"
       }
     },
     {
@@ -41,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/fluent.git",
       "state" : {
-        "revision" : "26c446002f03c5ab34b20d86873014ef3d92d0da",
-        "version" : "4.5.0"
+        "revision" : "2da106f46b093885f77fa03e3c719ab5bb8cfab4",
+        "version" : "4.6.0"
       }
     },
     {
@@ -50,8 +59,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/fluent-kit.git",
       "state" : {
-        "revision" : "38670d2eefcba27530272946d627ac8d4e45f017",
-        "version" : "1.35.1"
+        "revision" : "be7912ee4991bcc8a5390fac0424d1d08221dcc6",
+        "version" : "1.36.1"
       }
     },
     {
@@ -59,8 +68,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/fluent-postgres-driver.git",
       "state" : {
-        "revision" : "a8b2839ea86c44a35c17f66eb0885f9e5b51a531",
-        "version" : "2.4.0"
+        "revision" : "4808c539f08306ae6002f6106813a9350baa141b",
+        "version" : "2.5.0"
       }
     },
     {
@@ -77,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/postgres-kit.git",
       "state" : {
-        "revision" : "e97975309073e05d408749ccc1356076e4fdc22a",
-        "version" : "2.8.2"
+        "revision" : "1174d9bc57798aba7a99451e5380c0eb0fb796d8",
+        "version" : "2.9.0"
       }
     },
     {
@@ -86,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/postgres-nio.git",
       "state" : {
-        "revision" : "d648c5b4594ffbc2f6173318f70f5531e05ccb4e",
-        "version" : "1.11.0"
+        "revision" : "7daf026e145de2c07d6e37f4171b1acb4b5f22b1",
+        "version" : "1.12.1"
       }
     },
     {
@@ -113,8 +122,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/sql-kit.git",
       "state" : {
-        "revision" : "3c5413a229bc2abc962dab17ea66d25e448ad344",
-        "version" : "3.21.0"
+        "revision" : "dcf10a00d7d5df987b7948e6fd5596fb65f6d0c2",
+        "version" : "3.23.0"
       }
     },
     {
@@ -129,10 +138,10 @@
     {
       "identity" : "swift-argument-parser",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser.git",
+      "location" : "https://github.com/apple/swift-argument-parser",
       "state" : {
-        "revision" : "9f39744e025c7d377987f30b03770805dcb0bcd1",
-        "version" : "1.1.4"
+        "revision" : "4ad606ba5d7673ea60679a61ff867cc1ff8c8e86",
+        "version" : "1.2.1"
       }
     },
     {
@@ -140,8 +149,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-atomics.git",
       "state" : {
-        "revision" : "919eb1d83e02121cdb434c7bfc1f0c66ef17febe",
-        "version" : "1.0.2"
+        "revision" : "ff3d2212b6b093db7f177d0855adbc4ef9c5f036",
+        "version" : "1.0.3"
       }
     },
     {
@@ -167,8 +176,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
-        "revision" : "f504716c27d2e5d4144fa4794b12129301d17729",
-        "version" : "1.0.3"
+        "revision" : "937e904258d22af6e447a0b72c0bc67583ef64a2",
+        "version" : "1.0.4"
       }
     },
     {
@@ -176,17 +185,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",
       "state" : {
-        "revision" : "d9825fa541df64b1a7b182178d61b9a82730d01f",
-        "version" : "2.1.0"
-      }
-    },
-    {
-      "identity" : "swift-format",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-format",
-      "state" : {
-        "branch" : "release/5.7",
-        "revision" : "3dd9b517b9e9846435aa782d769ef5825e7c2d65"
+        "revision" : "75ec60b8b4cc0f085c3ac414f3dca5625fa3588e",
+        "version" : "2.2.4"
       }
     },
     {
@@ -194,8 +194,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "6fe203dc33195667ce1759bf0182975e4653ba1c",
-        "version" : "1.4.4"
+        "revision" : "3e3ef75109d6801b2c44504e73f55f0dce6662c9",
+        "version" : "1.5.1"
       }
     },
     {
@@ -212,8 +212,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-metrics.git",
       "state" : {
-        "revision" : "53be78637ecd165d1ddedc4e20de69b8f43ec3b7",
-        "version" : "2.3.2"
+        "revision" : "9b39d811a83cf18b79d7d5513b06f8b290198b10",
+        "version" : "2.3.3"
       }
     },
     {
@@ -221,8 +221,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "b4e0a274f7f34210e97e2f2c50ab02a10b549250",
-        "version" : "2.41.1"
+        "revision" : "4ad2c3733845abd9ee8892a323b0fa0d80f37e34",
+        "version" : "2.47.0"
       }
     },
     {
@@ -230,8 +230,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-extras.git",
       "state" : {
-        "revision" : "6c84d247754ad77487a6f0694273b89b83efd056",
-        "version" : "1.14.0"
+        "revision" : "91dd2d61fb772e1311bb5f13b59266b579d77e42",
+        "version" : "1.15.0"
       }
     },
     {
@@ -239,8 +239,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-http2.git",
       "state" : {
-        "revision" : "f9ab1c94c80d568efd762d2a638f25162691d766",
-        "version" : "1.22.1"
+        "revision" : "d6656967f33ed8b368b38e4b198631fc7c484a40",
+        "version" : "1.23.1"
       }
     },
     {
@@ -248,8 +248,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-ssl.git",
       "state" : {
-        "revision" : "ba7c0d7f82affc518147ea61d240330bf7f7ea9b",
-        "version" : "2.22.1"
+        "revision" : "4fb7ead803e38949eb1d6fabb849206a72c580f3",
+        "version" : "2.23.0"
       }
     },
     {
@@ -257,8 +257,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio-transport-services.git",
       "state" : {
-        "revision" : "4e02d9cf35cabfb538c96613272fb027dd0c8692",
-        "version" : "1.13.1"
+        "revision" : "c0d9a144cfaec8d3d596aadde3039286a266c15c",
+        "version" : "1.15.0"
       }
     },
     {
@@ -271,30 +271,12 @@
       }
     },
     {
-      "identity" : "swift-syntax",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-syntax",
-      "state" : {
-        "revision" : "04d4497be6b88e524a71778d828790e9589ae1c4",
-        "version" : "0.50700.0"
-      }
-    },
-    {
       "identity" : "swift-system",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-system.git",
       "state" : {
-        "revision" : "836bc4557b74fe6d2660218d56e3ce96aff76574",
-        "version" : "1.1.1"
-      }
-    },
-    {
-      "identity" : "swift-tools-support-core",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-tools-support-core.git",
-      "state" : {
-        "revision" : "4f07be3dc201f6e2ee85b6942d0c220a16926811",
-        "version" : "0.2.7"
+        "revision" : "025bcb1165deab2e20d4eaba79967ce73013f496",
+        "version" : "1.2.1"
       }
     },
     {
@@ -302,8 +284,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/karwa/swift-url",
       "state" : {
-        "revision" : "16b0c933ac3f15bcabf371f16859b60d4dc877e6",
-        "version" : "0.4.0"
+        "revision" : "a04b0e57f148698d091c90392901ce92fd0c5623",
+        "version" : "0.4.1"
       }
     },
     {
@@ -311,8 +293,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/MrLotU/SwiftPrometheus.git",
       "state" : {
-        "revision" : "688e1fd540aecc191a9e40ef5c378432cbf2f787",
-        "version" : "1.0.0"
+        "revision" : "2095e26b2b70f8e04598c7d57ca6268d1221aecd",
+        "version" : "1.0.1"
       }
     },
     {
@@ -320,8 +302,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/vapor.git",
       "state" : {
-        "revision" : "dda0de537e7906414dccd551e77095be1e34e3da",
-        "version" : "4.65.2"
+        "revision" : "a7d88181e68f03d1aeb7ecb80269ab3da9e5d155",
+        "version" : "4.69.1"
       }
     },
     {
@@ -331,6 +313,15 @@
       "state" : {
         "revision" : "2d9d2188a08eef4a869d368daab21b3c08510991",
         "version" : "2.6.1"
+      }
+    },
+    {
+      "identity" : "yams",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jpsim/Yams.git",
+      "state" : {
+        "revision" : "c7facc5ccb8c5a4577ea8c491aa875762cdee57a",
+        "version" : "5.0.3"
       }
     }
   ],

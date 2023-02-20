@@ -10,7 +10,7 @@ struct AuthenticationController: RouteCollection {
     }
 
     func getLogin(request: Request) async throws -> LoginView {
-        LoginView(authenticatedUser: request.auth.get(), errorMessage: nil)
+        LoginView(authenticatedUser: request.auth.get(), errorMessage: nil, blogConfiguration: request.application.blogConfiguration)
     }
 
     struct LoginRequest: Content {
@@ -27,17 +27,17 @@ struct AuthenticationController: RouteCollection {
             // Frustrate timing attacks by matching against a password hash even if no matching user is found.
 
             _ = try? AuthenticationController.timeWastingPasswordHash.matches(loginRequest.password)
-            let view = LoginView(authenticatedUser: nil, errorMessage: wrongPasswordMessage)
+            let view = LoginView(authenticatedUser: nil, errorMessage: wrongPasswordMessage, blogConfiguration: request.application.blogConfiguration)
             return try await view.encodeResponse(status: .unauthorized, for: request)
         }
 
         guard try credentials.passwordHash.matches(loginRequest.password) else {
-            let view = LoginView(authenticatedUser: nil, errorMessage: wrongPasswordMessage)
+            let view = LoginView(authenticatedUser: nil, errorMessage: wrongPasswordMessage, blogConfiguration: request.application.blogConfiguration)
             return try await view.encodeResponse(status: .unauthorized, for: request)
         }
 
         guard let user = try await User.find(credentials.userID, on: request.db) else {
-            let view = LoginView(authenticatedUser: nil, errorMessage: wrongPasswordMessage)
+            let view = LoginView(authenticatedUser: nil, errorMessage: wrongPasswordMessage, blogConfiguration: request.application.blogConfiguration)
             return try await view.encodeResponse(status: .unauthorized, for: request)
         }
 

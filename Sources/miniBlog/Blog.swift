@@ -7,24 +7,13 @@ import Vapor
 
 /// The blog application.
 class Blog {
-    /// Blog configuration.
-    struct Configuration: Codable {
-        let databaseConfiguration: DatabaseConfiguration
-        let httpServerConfiguration: HTTPServerConfiguration
-        init(
-            databaseConfiguration: DatabaseConfiguration,
-            httpServerConfiguration: HTTPServerConfiguration = HTTPServerConfiguration.default
-        ) {
-            self.databaseConfiguration = databaseConfiguration
-            self.httpServerConfiguration = httpServerConfiguration
-        }
-    }
-
     /// Instantiates a blog.
-    init(configuration: Configuration, environment: Environment) throws {
+    init(configuration: ApplicationConfiguration, environment: Environment) throws {
         self.configuration = configuration
         self.environment = environment
+        
         app = Vapor.Application(Vapor.Environment(name: environment.description, arguments: ["vapor", "serve"]))
+        app.configuration = configuration
         app.databases.use(
             .postgres(
                 hostname: configuration.databaseConfiguration.host,
@@ -40,11 +29,11 @@ class Blog {
         app.middleware.use(app.sessions.middleware)
         app.middleware.use(SessionAuthenticator())
         app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
-
+        
         try registerRoutes()
     }
 
-    static func prepare(configuration: Configuration, environment: Environment) async throws -> Blog {
+    static func prepare(configuration: ApplicationConfiguration, environment: Environment) async throws -> Blog {
         let blog = try Blog(configuration: configuration, environment: environment)
         blog.registerMigrations()
         try await blog.app.autoMigrate()
@@ -77,7 +66,7 @@ class Blog {
         try register(publicRoutes: routes)
     }
 
-    let configuration: Configuration
+    let configuration: ApplicationConfiguration
     let environment: Environment
     let app: Vapor.Application
     var startTime: Date?
@@ -104,4 +93,15 @@ extension Blog {
             try await password.create(on: database)
         }
     }
+}
+
+
+
+extension Vapor.Application {
+  var configuration: ApplicationConfiguration! {
+    get { storage[ApplicationConfiguration.StorageKey.self] }
+    set { storage[ApplicationConfiguration.StorageKey.self] = newValue }
+  }
+    
+    var blogConfiguration: BlogConfiguration { configuration.blogConfiguration }
 }

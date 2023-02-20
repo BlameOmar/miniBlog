@@ -1,0 +1,10 @@
+dev.omarevans.miniBlog:
+    # HTTP server configuration
+    http:
+        address: 127.0.0.1
+        port: 8080
+    # Blog configuration
+    blog:
+        name: miniblog.omar
+        url: https://blog.omarevans.com
+        staticFilesURL: https://static.omarevans.com

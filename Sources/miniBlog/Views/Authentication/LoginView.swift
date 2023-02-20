@@ -3,9 +3,10 @@ import SafeHTML
 struct LoginView: AuthAwareView {
     let authenticatedUser: User?
     let errorMessage: String?
+    let blogConfiguration: BlogConfiguration
 
     @HTMLBuilder var body: HTMLSafeString {
-        DefaultPageTemplate(title: "Auth Debug", authenticatedUser: authenticatedUser) {
+        DefaultPageTemplate(title: "Auth Debug", authenticatedUser: authenticatedUser, blogConfiguration: blogConfiguration) {
             if let errorMessage = errorMessage {
                 "<strong>\(errorMessage)</strong>"
             }

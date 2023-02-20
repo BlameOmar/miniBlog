@@ -1,5 +1,8 @@
 import Foundation
 import SafeHTML
+import Vapor
+
+extension BindAddress: Codable {}
 
 struct DebugStatusView: HTMLView {
     let app: Blog
@@ -9,14 +12,16 @@ struct DebugStatusView: HTMLView {
     }
 
     @HTMLBuilder var body: HTMLSafeString {
-        let relativeDateFormatter = RelativeDateTimeFormatter()
-        let startedAgo = relativeDateFormatter.localizedString(for: app.startTime!, relativeTo: Date())
+        let ba = BindAddress.hostname("0.0.0.0", port: 8080)
+        let je = JSONEncoder()
+        let json = try! je.encode(ba)
+        
         """
         <title>Debug Status</title>
         <body>
         <h1>Status</h1>
         <table>
-          <tr><td>Start time</td><td>\(app.startTime!) (\(startedAgo))</td></tr>
+          <tr><td>Start time</td><td>\(app.startTime!)</td></tr>
           <tr><td>Profile</td><td>\(app.environment)</td></tr>
         </table>
         <h2>Environment Variables</h2>
@@ -29,6 +34,7 @@ struct DebugStatusView: HTMLView {
         </table>
         <h2>Configuration</h2>
         \(app.configuration)
+        \(json)
         </body?
         """
     }

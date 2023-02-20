@@ -3,6 +3,7 @@ import SafeHTML
 
 struct JournalEntryView: HTMLView {
     let journalEntry: JournalEntry
+    let blogConfiguration: BlogConfiguration
     static let dateFormatter = makeDateFormatter()
 
     static func makeDateFormatter() -> DateFormatter {
@@ -17,7 +18,7 @@ struct JournalEntryView: HTMLView {
     }
 
     @HTMLBuilder var body: HTMLSafeString {
-        ReaderPageTemplate(title: journalEntry.title) {
+        ReaderPageTemplate(title: journalEntry.title, blogConfiguration: blogConfiguration) {
             """
             <article vocab="https://schema.org/" typeof="BlogPosting" class="journal-entry">
               <header>
