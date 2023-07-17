@@ -29,7 +29,7 @@ struct UserController: RouteCollection {
 
         // Found a case-insensitive match
         if user.username != username {
-            throw Abort.redirect(to: "/users/\(user.username)", type: .permanent)
+            throw Abort.redirect(to: "/users/\(user.username)", redirectType: .permanent)
         }
 
         return user

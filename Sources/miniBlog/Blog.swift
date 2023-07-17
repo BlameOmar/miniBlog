@@ -27,11 +27,15 @@ class Blog {
         app = Vapor.Application(Vapor.Environment(name: environment.description, arguments: ["vapor", "serve"]))
         app.databases.use(
             .postgres(
-                hostname: configuration.databaseConfiguration.host,
-                username: configuration.databaseConfiguration.username,
-                password: configuration.databaseConfiguration.password.secretValue,
-                database: configuration.databaseConfiguration.database
-            ), as: .psql)
+                configuration: SQLPostgresConfiguration(
+                    hostname: configuration.databaseConfiguration.host,
+                    username: configuration.databaseConfiguration.username,
+                    database: configuration.databaseConfiguration.database,
+                    tls: .disable
+                ),
+                sqlLogLevel: .info
+            ),
+            as: .psql)
 
         app.directory.publicDirectory = configuration.httpServerConfiguration.rootDirectory.path
         app.http.server.configuration.port = configuration.httpServerConfiguration.port
