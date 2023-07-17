@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.8
 
 import PackageDescription
 
@@ -8,16 +8,16 @@ let package = Package(
         .macOS(.v12)
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.0"),
+        .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.0.0"),
         .package(url: "https://github.com/apple/swift-collections.git", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-format", branch: "release/5.7"),
+        .package(url: "https://github.com/apple/swift-format.git", from: "508.0.0"),
         .package(url: "https://github.com/apple/swift-log.git", from: "1.0.0"),
-        .package(url: "https://github.com/apple/swift-markdown", branch: "release/5.7"),
+        .package(url: "https://github.com/apple/swift-markdown.git", from: "0.2.0"),
         .package(url: "https://github.com/apple/swift-metrics.git", from: "2.0.0"),
-        .package(url: "https://github.com/BlameOmar/argon2", branch: "main"),
-        .package(url: "https://github.com/gumob/PunycodeSwift.git", from: "2.1.0"),
-        .package(url: "https://github.com/karwa/swift-url", from: "0.4.0"),
-        .package(url: "https://github.com/MrLotU/SwiftPrometheus.git", from: "1.0.0-alpha"),
+        .package(url: "https://github.com/BlameOmar/argon2.git", branch: "main"),
+        .package(url: "https://github.com/gumob/PunycodeSwift.git", from: "2.0.0"),
+        .package(url: "https://github.com/karwa/swift-url.git", from: "0.4.0"),
+        .package(url: "https://github.com/MrLotU/SwiftPrometheus.git", from: "1.0.0"),
         .package(url: "https://github.com/vapor/fluent.git", from: "4.0.0"),
         .package(url: "https://github.com/vapor/fluent-postgres-driver.git", from: "2.0.0"),
         .package(url: "https://github.com/vapor/vapor.git", from: "4.0.0"),
@@ -67,15 +67,5 @@ let package = Package(
         .target(
             name: "SwiftExtras",
             dependencies: []),
-        .plugin(
-            name: "SwiftFormatterPlugin",
-            capability: .command(
-                intent: .sourceCodeFormatting(),
-                permissions: [
-                    .writeToPackageDirectory(reason: "This command reformats source files")
-                ]),
-            dependencies: [
-                .product(name: "swift-format", package: "swift-format")
-            ]),
     ]
 )
