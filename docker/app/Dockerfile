@@ -3,42 +3,41 @@
 # ================================
 FROM swift:5.8-jammy as build
 
-# Install OS updates and, if needed, sqlite3
+# Install OS updates.
 RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt-get -q update \
     && apt-get -q dist-upgrade -y\
     && rm -rf /var/lib/apt/lists/*
 
-# Set up a build area
-WORKDIR /build
-
-# First just resolve dependencies.
-# This creates a cached layer that can be reused
-# as long as your Package.swift/Package.resolved
-# files do not change.
+# Set up a workspace and copy files necessary for building the package.
+WORKDIR /workspace/src
 COPY ./Package.* ./
-RUN swift package resolve
-
-# Copy entire repo into container
 COPY ./Sources ./Sources
 COPY ./Tests ./Tests
 
-# Build everything, with optimizations
-RUN swift build -c release -j $(nproc --all) --static-swift-stdlib
+# Build everything in release mode.
+# We disable the shared dependency and manifest caches to force all intermediary files to be written
+# to /workspace/build, which is a docker cache-mount. This speeds up subsequent builds, since most
+# files will not have changed.
+RUN --mount=type=cache,target=/workspace/build \
+    swift build \
+    --scratch-path /workspace/build \
+    --disable-dependency-cache \
+    --manifest-cache local \
+    --configuration release \
+    --static-swift-stdlib \
+    --jobs $(nproc --all)
 
-# Switch to the staging area
-WORKDIR /staging
+# Switch to the staging area.
+WORKDIR /workspace/staging
 
-# Copy main executable to staging area
-RUN cp "$(swift build --package-path /build -c release --show-bin-path)/miniBlog" ./
+# Copy main executable to staging area.
+RUN --mount=type=cache,target=/workspace/build \
+    cp "$(swift build --package-path /workspace/src --scratch-path /workspace/build -c release --show-bin-path)/miniBlog" ./
 
-# Copy resources bundled by SPM to staging area
-RUN find -L "$(swift build --package-path /build -c release --show-bin-path)/" -regex '.*\.resources$' -exec cp -Ra {} ./ \;
-
-# Copy any resources from the public directory and views directory if the directories exist
-# Ensure that by default, neither the directory nor any of its contents are writable.
-RUN [ -d /build/HTTPRoot ] && { mv /build/HTTPRoot ./HTTPRoot && chmod -R a-w ./HTTPRoot; } || true
-RUN [ -d /build/Resources ] && { mv /build/Resources ./Resources && chmod -R a-w ./Resources; } || true
+# Copy resources bundled by SPM to staging area.
+RUN --mount=type=cache,target=/workspace/build \
+    find -L "$(swift build --package-path /workspace/src --scratch-path /workspace/build -c release --show-bin-path)/" -regex '.*\.resources$' -exec cp -Ra {} ./ \;
 
 # ================================
 # Run image
@@ -51,8 +50,6 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
     && apt-get -q dist-upgrade -y \
     && apt-get -q install -y \
       ca-certificates \
-      iputils-ping \
-      postgresql \
       tzdata \
 # If your app or its dependencies import FoundationNetworking, also install `libcurl4`.
       libcurl4 \
@@ -60,22 +57,22 @@ RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
       # libxml2 \
     && rm -r /var/lib/apt/lists/*
 
-# Create a vapor user and group with /app as its home directory
+# Create the miniblog user and group with /app as its home directory.
 RUN useradd --user-group --create-home --system --skel /dev/null --home-dir /app miniblog
 
 # Switch to the new home directory
 WORKDIR /app
 
-# Copy built executable and any staged resources from builder
-COPY --from=build --chown=miniblog:miniblog /staging /app
+# Copy built executable and any staged resources from builder.
+COPY --from=build --chown=miniblog:miniblog /workspace/staging /app
 COPY --chown=miniblog:miniblog ./HTTPRoot ./HTTPRoot
 
-# Ensure all further commands run as the vapor user
+# Ensure all further commands run as the miniblog user.
 USER miniblog:miniblog
 
-# Let Docker bind to port 8080
+# Let Docker bind to port 8080.
 EXPOSE 8080
 
-# Start the Vapor service when the image is run, default to listening on 8080 in production environment
+# Start miniblog when the image is run, default to listening on 8080 in production environment.
 ENTRYPOINT ["./miniBlog"]
-CMD ["serve", "--log-level", "info", "--http-root", "/app/HTTPRoot", "--port", "8080"]
+CMD ["serve", "--log-level", "info", "--http-root", "/app/HTTPRoot", "--port", "8080", "--environment", "production"]
