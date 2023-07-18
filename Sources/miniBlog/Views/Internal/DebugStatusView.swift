@@ -1,4 +1,3 @@
-import Foundation
 import SafeHTML
 
 struct DebugStatusView: HTMLView {
@@ -9,14 +8,12 @@ struct DebugStatusView: HTMLView {
     }
 
     @HTMLBuilder var body: HTMLSafeString {
-        let relativeDateFormatter = RelativeDateTimeFormatter()
-        let startedAgo = relativeDateFormatter.localizedString(for: app.startTime!, relativeTo: Date())
         """
         <title>Debug Status</title>
         <body>
         <h1>Status</h1>
         <table>
-          <tr><td>Start time</td><td>\(app.startTime!) (\(startedAgo))</td></tr>
+          <tr><td>Start time</td><td>\(app.startTime!)</td></tr>
           <tr><td>Profile</td><td>\(app.environment)</td></tr>
         </table>
         <h2>Environment Variables</h2>

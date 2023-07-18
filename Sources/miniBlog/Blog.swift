@@ -30,6 +30,7 @@ class Blog {
                 configuration: SQLPostgresConfiguration(
                     hostname: configuration.databaseConfiguration.host,
                     username: configuration.databaseConfiguration.username,
+                    password: configuration.databaseConfiguration.password.secretValue,
                     database: configuration.databaseConfiguration.database,
                     tls: .disable
                 ),

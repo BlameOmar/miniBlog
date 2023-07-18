@@ -1,0 +1,39 @@
+name: miniblog
+
+x-database-environment: &database-environment
+  DATABASE_NAME: &database-name miniblog
+  DATABASE_USERNAME: &database-username miniblog
+  SECRET_DATABASE_PASSWORD: insecure-miniblog-password
+
+services:
+  app:
+    image: miniblog/app
+    build:
+      context: ./
+      dockerfile: docker/app/Dockerfile
+    depends_on:
+      database:
+        condition: service_healthy
+        restart: false
+    environment:
+      <<: *database-environment
+      DATABASE_HOST: database
+
+  database:
+    image: miniblog/database
+    build:
+      context: docker/database
+    restart: always
+    environment:
+      <<: *database-environment
+      POSTGRES_PASSWORD: insecure-superuser-password
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
+        mode: host
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", *database-name, "-U", *database-username ]
+      timeout: 5s
+      interval: 30s
+      retries: 3
