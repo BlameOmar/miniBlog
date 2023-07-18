@@ -49,7 +49,7 @@ extension CaseInsensitiveText: PostgresCodable {
         type: PostgresNIO.PostgresDataType,
         format: PostgresNIO.PostgresFormat,
         context: PostgresNIO.PostgresDecodingContext<JSONDecoder>
-    ) throws where JSONDecoder : PostgresNIO.PostgresJSONDecoder {
+    ) throws where JSONDecoder: PostgresNIO.PostgresJSONDecoder {
         guard format == .binary && type == Self.psqlType else {
             throw PostgresDecodingError.Code.typeMismatch
         }
@@ -58,19 +58,19 @@ extension CaseInsensitiveText: PostgresCodable {
         }
         self.init(value)
     }
-    
+
     static var psqlType: PostgresNIO.PostgresDataType {
         Self.postgresDataType
     }
-    
+
     static var psqlFormat: PostgresNIO.PostgresFormat {
         .text
     }
-    
+
     func encode<JSONEncoder>(
         into byteBuffer: inout NIOCore.ByteBuffer,
         context: PostgresNIO.PostgresEncodingContext<JSONEncoder>
-    ) throws where JSONEncoder : PostgresNIO.PostgresJSONEncoder {
+    ) throws where JSONEncoder: PostgresNIO.PostgresJSONEncoder {
         byteBuffer.writeString(self.wrappedValue)
     }
 }
