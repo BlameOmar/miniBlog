@@ -1,0 +1,24 @@
+name: Swift
+on:
+  pull_request:
+    branches:
+      - development
+  push:
+    branches:
+      - development
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    container: swift:5.8-jammy
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Resolve dependencies
+        run: swift package resolve --only-use-versions-from-resolved-file --skip-update
+      - name: Build
+        run: swift build --only-use-versions-from-resolved-file --skip-update --build-tests --jobs $(nproc --all)
+      - name: Test
+        run: swift test --only-use-versions-from-resolved-file --skip-update --parallel
