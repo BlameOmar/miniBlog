@@ -8,6 +8,9 @@ on:
     branches:
       - development
 
+env:
+  SWIFT_COMMON_OPTIONS: --only-use-versions-from-resolved-file --skip-update
+
 jobs:
   test:
     name: Unit Tests
@@ -18,11 +21,11 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Resolve dependencies
-        run: swift package resolve --only-use-versions-from-resolved-file --skip-update
+        run: swift package resolve $SWIFT_COMMON_OPTIONS
       - name: Build
-        run: swift build --only-use-versions-from-resolved-file --skip-update --build-tests --jobs $(nproc --all)
+        run: swift build $SWIFT_COMMON_OPTIONS --build-tests --jobs $(nproc --all)
       - name: Test
-        run: swift test --only-use-versions-from-resolved-file --skip-update --parallel
+        run: swift test $SWIFT_COMMON_OPTIONS --parallel
 
   lint:
     name: Lint
@@ -32,6 +35,11 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+      - name: Resolve dependencies
+        run: swift package resolve $SWIFT_COMMON_OPTIONS
       - name: Lint
-        # The current version of the plugin requires specifying every target.
-        run: swift package --only-use-versions-from-resolved-file --skip-update plugin lint-source-code $(for target in $(ls Sources); do echo -n " --target $target"; done)
+        # The current version of the swift-format plugin requires listing the targets explicitly.
+        # TODO: Remove explicit targets when/if the plugin automatically selects all targets.
+        run: >-
+          swift package $SWIFT_COMMON_OPTIONS plugin lint-source-code
+            $(for target in $(ls Sources); do echo -n " --target $target"; done)
