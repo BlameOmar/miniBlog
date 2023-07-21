@@ -22,3 +22,14 @@ jobs:
         run: swift build --only-use-versions-from-resolved-file --skip-update --build-tests --jobs $(nproc --all)
       - name: Test
         run: swift test --only-use-versions-from-resolved-file --skip-update --parallel
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    container: swift:5.8-jammy
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Lint
+        # The current version of the plugin requires specifying every target.
+        run: swift package plugin lint-source-code $(for target in $(ls Sources); do echo -n " --target $target"; done)
