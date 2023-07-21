@@ -37,3 +37,11 @@ services:
       timeout: 5s
       interval: 30s
       retries: 3
+
+  test:
+    image: miniblog/test
+    build:
+      context: ./
+      dockerfile: docker/app/test.Dockerfile
+    profiles:
+      - test
