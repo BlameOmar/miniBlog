@@ -32,4 +32,4 @@ jobs:
         uses: actions/checkout@v3
       - name: Lint
         # The current version of the plugin requires specifying every target.
-        run: swift package plugin lint-source-code $(for target in $(ls Sources); do echo -n " --target $target"; done)
+        run: swift package --only-use-versions-from-resolved-file --skip-update plugin lint-source-code $(for target in $(ls Sources); do echo -n " --target $target"; done)
