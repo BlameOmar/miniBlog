@@ -1,4 +1,5 @@
 name: Swift
+
 on:
   pull_request:
     branches:
@@ -7,11 +8,14 @@ on:
     branches:
       - development
 
+env:
+  swift-version: 5.8
+
 jobs:
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
-    container: swift:5.8-jammy
+    container: swift:${{ env.swift-version }}-jammy
 
     steps:
       - name: Check out repository code
@@ -22,10 +26,11 @@ jobs:
         run: swift build --only-use-versions-from-resolved-file --skip-update --build-tests --jobs $(nproc --all)
       - name: Test
         run: swift test --only-use-versions-from-resolved-file --skip-update --parallel
+
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    container: swift:5.8-jammy
+    container: swift:${{ env.swift-version }}-jammy
 
     steps:
       - name: Check out repository code
