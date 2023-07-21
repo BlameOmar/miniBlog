@@ -2,10 +2,6 @@ import PostgresNIO
 
 struct PostgresOID {
     var wrappedValue: Int32
-
-    init(wrappedValue: Int32) {
-        self.wrappedValue = wrappedValue
-    }
 }
 
 extension PostgresOID {

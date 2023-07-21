@@ -3,10 +3,6 @@ import PostgresNIO
 @propertyWrapper
 struct CaseInsensitiveText {
     var wrappedValue: String
-
-    init(wrappedValue: String) {
-        self.wrappedValue = wrappedValue
-    }
 }
 
 extension CaseInsensitiveText {

@@ -1,6 +1,7 @@
 import FluentKit
 import FluentPostgresDriver
 
+// swift-format-ignore: AlwaysUseLowerCamelCase
 enum TableName: String {
     case user
     case password
@@ -26,6 +27,7 @@ extension TimestampProperty where Format == DefaultTimestampFormat {
     }
 }
 
+// swift-format-ignore: AlwaysUseLowerCamelCase
 enum StandardFields: FieldKey {
     case body
     case created_at

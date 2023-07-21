@@ -1,6 +1,6 @@
 import Foundation
 
-/// A nonstandard uuid generatorx
+/// A nonstandard uuid generator.
 ///
 /// ```
 /// 0                               1
@@ -16,7 +16,7 @@ import Foundation
 /// +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 /// ```
 final class UUIDGenerator {
-    static let defaultGenerator: UUIDGenerator = .init()
+    static let `default`: UUIDGenerator = .init()
 
     private static let version: UInt64 = 1
     private static let versionWidth = 8
