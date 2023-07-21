@@ -7,10 +7,12 @@ public struct KiB {
         self.kibibytes = kibibytes
     }
 
+    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static func MiB(_ m: Int) -> Self {
         .init(m * 1024)
     }
 
+    // swift-format-ignore: AlwaysUseLowerCamelCase
     public static func GiB(_ g: Int) -> Self {
         .init(g * 1_048_576)
     }
