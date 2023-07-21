@@ -10,12 +10,14 @@ on:
 jobs:
   test:
     name: Unit Tests
-    runs-on: ubuntu-latest
-    container: swift:5.8-jammy
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+      - uses: swift-actions/setup-swift@v1
+        with:
+          swift-version: "5.8"
       - name: Resolve dependencies
         run: swift package resolve --only-use-versions-from-resolved-file --skip-update
       - name: Build
