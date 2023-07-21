@@ -23,12 +23,12 @@ final class Password: Model {
 
     init(id: UUID, user: User, password: Secret<String>) throws {
         self.id = id
-        try $user.id = user.requireID()
-        try hash = .recommended(password)
+        $user.id = try user.requireID()
+        hash = try .recommended(password)
     }
 
     func set(_ password: Secret<String>) throws {
-        try hash = .recommended(password)
+        hash = try .recommended(password)
     }
 
     func matches(_ password: Secret<String>) -> Bool {
