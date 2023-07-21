@@ -8,14 +8,14 @@ on:
     branches:
       - development
 
-env:
-  swift-version: 5.8
-
 jobs:
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
-    container: swift:${{ env.swift-version }}-jammy
+    strategy:
+      matrix:
+        swift-version: [ &default-swift-version "5.8" ]
+    container: swift:${{ matrix.swift-version }}-jammy
 
     steps:
       - name: Check out repository code
@@ -30,6 +30,9 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        swift-version: [ *default-swift-version ]
     container: swift:${{ env.swift-version }}-jammy
 
     steps:
