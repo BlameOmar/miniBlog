@@ -15,25 +15,17 @@ jobs:
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
+    container: swift:${{ vars.DEFAULT_SWIFT_VERSION }}-jammy
 
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-      - name: Build test image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          file: docker/app/Dockerfile
-          target: test
-          push: false
-          load: true
-          cache-from: type=gha,scope=$GITHUB_REF_NAME-test
-          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-test
-          tags: miniblog/test:latest
-      - name: Run tests
-        run: docker run --rm miniblog/test:latest
+      - name: Resolve dependencies
+        run: swift package resolve $SWIFT_COMMON_OPTIONS
+      - name: Build
+        run: swift build $SWIFT_COMMON_OPTIONS --build-tests --jobs $(nproc --all)
+      - name: Test
+        run: swift test $SWIFT_COMMON_OPTIONS --parallel
 
   lint:
     name: Lint
