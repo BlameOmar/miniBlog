@@ -1,61 +1,49 @@
-# ================================
-# Build image
-# ================================
-FROM swift:5.8-jammy as build
+FROM swift:5.8-jammy as prepare
 
-# Install OS updates.
-RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
-    && apt-get -q update \
-    && apt-get -q dist-upgrade -y\
-    && rm -rf /var/lib/apt/lists/*
+ARG swiftpm_cache=/root/.cache/org.swift.swiftpm
 
-# Set up a workspace and copy files necessary for building the package.
 WORKDIR /workspace/src
+
 COPY ./Package.* ./
+RUN --mount=type=cache,target=$swiftpm_cache \
+    swift package resolve --only-use-versions-from-resolved-file --skip-update
+
 COPY ./Sources ./Sources
 COPY ./Tests ./Tests
 
-# Build everything in release mode.
-# We disable the shared dependency and manifest caches to force all intermediary files to be written
-# to /workspace/build, which is a docker cache-mount. This speeds up subsequent builds, since most
-# files will not have changed.
-RUN --mount=type=cache,target=/workspace/build \
-    swift build \
-    --scratch-path /workspace/build \
-    --disable-dependency-cache \
-    --manifest-cache local \
+
+FROM prepare as build-debug
+
+RUN swift build --only-use-versions-from-resolved-file --skip-update --build-tests --jobs $(nproc --all)
+
+
+FROM prepare as build-release
+
+RUN swift build \
+    --only-use-versions-from-resolved-file  \
+    --skip-update \
     --configuration release \
     --static-swift-stdlib \
     --jobs $(nproc --all)
 
-# Switch to the staging area.
+
+FROM build-release as staging
+
 WORKDIR /workspace/staging
 
 # Copy main executable to staging area.
-RUN --mount=type=cache,target=/workspace/build \
-    cp "$(swift build --package-path /workspace/src --scratch-path /workspace/build -c release --show-bin-path)/miniBlog" ./
+RUN cp /workspace/src/.build/release/miniBlog ./
 
 # Copy resources bundled by SPM to staging area.
-RUN --mount=type=cache,target=/workspace/build \
-    find -L "$(swift build --package-path /workspace/src --scratch-path /workspace/build -c release --show-bin-path)/" -regex '.*\.resources$' -exec cp -Ra {} ./ \;
+RUN find -L /workspace/src/.build/release/ -regex '.*\.resources$' -exec cp -Ra {} ./ \;
 
-# ================================
-# Run image
-# ================================
-FROM ubuntu:jammy
 
-# Make sure all system packages are up to date, and install only essential packages.
-RUN export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true \
-    && apt-get -q update \
-    && apt-get -q dist-upgrade -y \
-    && apt-get -q install -y \
-      ca-certificates \
-      tzdata \
-# If your app or its dependencies import FoundationNetworking, also install `libcurl4`.
-      libcurl4 \
-# If your app or its dependencies import FoundationXML, also install `libxml2`.
-      # libxml2 \
-    && rm -r /var/lib/apt/lists/*
+FROM build-debug as app-debug
+
+COPY ./HTTPRoot ./HTTPRoot
+
+
+FROM swift:5.8-jammy-slim as app
 
 # Create the miniblog user and group with /app as its home directory.
 RUN useradd --user-group --create-home --system --skel /dev/null --home-dir /app miniblog
@@ -64,7 +52,7 @@ RUN useradd --user-group --create-home --system --skel /dev/null --home-dir /app
 WORKDIR /app
 
 # Copy built executable and any staged resources from builder.
-COPY --from=build --chown=miniblog:miniblog /workspace/staging /app
+COPY --from=staging --chown=miniblog:miniblog /workspace/staging /app
 COPY --chown=miniblog:miniblog ./HTTPRoot ./HTTPRoot
 
 # Ensure all further commands run as the miniblog user.

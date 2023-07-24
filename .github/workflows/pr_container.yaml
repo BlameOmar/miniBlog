@@ -1,0 +1,71 @@
+name: Container
+
+on:
+  pull_request:
+    branches:
+      - development
+  push:
+    branches:
+      - development
+
+jobs:
+  test-build-app:
+    name: Test building app image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: docker/app/Dockerfile
+          target: app
+          tags: miniblog/app:latest
+          cache-from: |
+            type=gha,scope=${{ github.ref_name }}-app
+            type=gha,scope=development-app
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-app
+
+  test-build-database:
+    name: Test building database image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: docker/database
+          tags: miniblog/database:latest
+          cache-from: |
+            type=gha,scope=${{ github.ref_name }}-database
+            type=gha,scope=development-database
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-database
+
+  test-build-test:
+    name: Test building debug image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: docker/app/Dockerfile
+          target: app-debug
+          tags: miniblog/app-debug:latest
+          cache-from: |
+            type=gha,scope=${{ github.ref_name }}-app-debug
+            type=gha,scope=development-app-debug
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-app-debug

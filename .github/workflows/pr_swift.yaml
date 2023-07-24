@@ -1,0 +1,44 @@
+name: Swift
+
+on:
+  pull_request:
+    branches:
+      - development
+  push:
+    branches:
+      - development
+
+env:
+  SWIFT_COMMON_OPTIONS: --only-use-versions-from-resolved-file --skip-update
+
+jobs:
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    container: swift:${{ vars.DEFAULT_SWIFT_VERSION }}-jammy
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Resolve dependencies
+        run: swift package resolve $SWIFT_COMMON_OPTIONS
+      - name: Build
+        run: swift build $SWIFT_COMMON_OPTIONS --build-tests --jobs $(nproc --all)
+      - name: Test
+        run: swift test $SWIFT_COMMON_OPTIONS --parallel
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    container: swift:${{ vars.DEFAULT_SWIFT_VERSION }}-jammy
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Resolve dependencies
+        run: swift package resolve $SWIFT_COMMON_OPTIONS
+      - name: Lint
+        # The current version of the swift-format plugin requires listing the targets explicitly.
+        # TODO: Remove explicit targets when/if the plugin automatically selects all targets.
+        run: >-
+          swift package $SWIFT_COMMON_OPTIONS plugin lint-source-code $(for target in $(ls Sources); do echo -n " --target $target"; done)

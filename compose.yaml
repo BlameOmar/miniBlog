@@ -11,6 +11,7 @@ services:
     build:
       context: ./
       dockerfile: docker/app/Dockerfile
+      target: app
     depends_on:
       database:
         condition: service_healthy
@@ -42,6 +43,8 @@ services:
     image: miniblog/test
     build:
       context: ./
-      dockerfile: docker/app/test.Dockerfile
+      dockerfile: docker/app/Dockerfile
+      target: build-debug
+    entrypoint: ["/usr/bin/swift", "test", "--only-use-versions-from-resolved-file", "--skip-update", "--parallel"]
     profiles:
       - test
