@@ -10,7 +10,7 @@ on:
 
 jobs:
   test-build-app:
-    name: Build app image test
+    name: Test building app image
     runs-on: ubuntu-latest
 
     steps:
@@ -29,7 +29,7 @@ jobs:
           cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-app
 
   test-build-database:
-    name: Build database image test
+    name: Test building database image
     runs-on: ubuntu-latest
 
     steps:
@@ -46,7 +46,7 @@ jobs:
           cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-database
 
   test-build-test:
-    name: Build debug image test
+    name: Test building debug image
     runs-on: ubuntu-latest
 
     steps:
