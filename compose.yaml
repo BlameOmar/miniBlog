@@ -44,6 +44,7 @@ services:
     build:
       context: ./
       dockerfile: docker/app/Dockerfile
-      target: test
+      target: build-debug
+    entrypoint: ["/usr/bin/swift", "test", "--only-use-versions-from-resolved-file", "--skip-update", "--parallel"]
     profiles:
       - test

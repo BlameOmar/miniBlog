@@ -19,8 +19,6 @@ RUN swift build --only-use-versions-from-resolved-file --skip-update --build-tes
 
 FROM prepare as build-release
 
-WORKDIR /workspace/src
-
 RUN swift build \
     --only-use-versions-from-resolved-file  \
     --skip-update \
@@ -40,9 +38,9 @@ RUN cp /workspace/src/.build/release/miniBlog ./
 RUN find -L /workspace/src/.build/release/ -regex '.*\.resources$' -exec cp -Ra {} ./ \;
 
 
-FROM build-debug as test
+FROM build-debug as app-debug
 
-ENTRYPOINT ["/usr/bin/swift", "test", "--only-use-versions-from-resolved-file", "--skip-update", "--parallel"]
+COPY ./HTTPRoot ./HTTPRoot
 
 
 FROM swift:5.8-jammy-slim as app
