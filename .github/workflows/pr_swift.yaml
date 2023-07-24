@@ -41,5 +41,4 @@ jobs:
         # The current version of the swift-format plugin requires listing the targets explicitly.
         # TODO: Remove explicit targets when/if the plugin automatically selects all targets.
         run: >-
-          swift package $SWIFT_COMMON_OPTIONS plugin lint-source-code
-            $(for target in $(ls Sources); do echo -n " --target $target"; done)
+          swift package $SWIFT_COMMON_OPTIONS plugin lint-source-code $(for target in $(ls Sources); do echo -n " --target $target"; done)
