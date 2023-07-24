@@ -25,8 +25,10 @@ jobs:
           file: docker/app/Dockerfile
           target: app
           tags: miniblog/app:latest
-          cache-from: type=gha,scope=$GITHUB_REF_NAME-app
-          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-app
+          cache-from: |
+            type=gha,scope=${{ github.ref_name }}-app
+            type=gha,scope=development-app
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-app
 
   test-build-database:
     name: Test building database image
@@ -42,8 +44,10 @@ jobs:
         with:
           context: docker/database
           tags: miniblog/database:latest
-          cache-from: type=gha,scope=$GITHUB_REF_NAME-database
-          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-database
+          cache-from: |
+            type=gha,scope=${{ github.ref_name }}-database
+            type=gha,scope=development-database
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-database
 
   test-build-test:
     name: Test building debug image
@@ -61,5 +65,7 @@ jobs:
           file: docker/app/Dockerfile
           target: app-debug
           tags: miniblog/app-debug:latest
-          cache-from: type=gha,scope=$GITHUB_REF_NAME-debug-latest
-          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-debug-latest
+          cache-from: |
+            type=gha,scope=${{ github.ref_name }}-app-debug
+            type=gha,scope=development-app-debug
+          cache-to: type=gha,mode=max,scope=${{ github.ref_name }}-app-debug
