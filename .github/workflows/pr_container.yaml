@@ -9,8 +9,8 @@ on:
       - development
 
 jobs:
-  test:
-    name: Test building all images
+  test-build-app:
+    name: Build app image test
     runs-on: ubuntu-latest
 
     steps:
@@ -18,5 +18,49 @@ jobs:
         uses: actions/checkout@v3
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      - name: Build all images
-        uses: docker/bake-action@v3.1.0
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: docker/app/Dockerfile
+          target: app
+          tags: miniblog/app:latest
+          cache-from: type=gha,scope=$GITHUB_REF_NAME-app
+          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-app
+
+  test-build-database:
+    name: Build database image test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: docker/database/Dockerfile
+          tags: miniblog/database:latest
+          cache-from: type=gha,scope=$GITHUB_REF_NAME-database
+          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-database
+
+  test-build-test:
+    name: Build debug image test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: docker/app/Dockerfile
+          target: app-debug
+          tags: miniblog/app-debug:latest
+          cache-from: type=gha,scope=$GITHUB_REF_NAME-debug-latest
+          cache-to: type=gha,mode=max,scope=$GITHUB_REF_NAME-debug-latest
